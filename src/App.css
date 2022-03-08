@@ -85,14 +85,14 @@ button {
   padding-top: 1.3rem;
 }
 
-.card-title {
+h2 {
   font-size: 3.5rem;
   color: black;
   margin: 1.5rem 0;
   align-self: normal;
 }
 
-.card-content {
+p {
   font-size: 1.3rem;
   color: #858585;
   line-height: 2.5rem;
@@ -256,7 +256,7 @@ button {
   padding-left: 3rem;
 }
 
-.form-container h1 {
+.form-container h2 {
   font-size: 3.5rem;
   color: black;
   padding-bottom: 2rem;

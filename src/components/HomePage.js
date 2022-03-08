@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 
 
@@ -8,6 +8,54 @@ import rabbit from '../assets/rabbit.png';
 import shield from '../assets/shield.png';
 
 const HomePage = (props) => {
+
+  const [h1, setH1] = useState([]);
+  const [h2, setH2] = useState([]);
+  const [p, setP] = useState([]);
+  const getHeadingOnes = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/headingOne");
+      const jsonData = await response.json();
+      console.log(jsonData);
+
+      setH1(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  useEffect(() => {
+    getHeadingOnes();
+  }, []);
+
+  const getHeadingTwos = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/headingTwo");
+      const jsonData = await response.json();
+      console.log(jsonData);
+
+      setH2(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  useEffect(() => {
+    getHeadingTwos();
+  }, []);
+
+  const getParagraphs = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/paragraph");
+      const jsonData = await response.json();
+      console.log(jsonData);
+
+      setP(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  useEffect(() => {
+    getParagraphs();
+  }, []);
 
   const obj1 = {
     names: [
@@ -63,11 +111,7 @@ const HomePage = (props) => {
     <Fragment>
       {/* NAVBAR */}
       <nav className="navbar">
-        <img
-          className="nav-logo"
-          src={navLogo}
-          alt="midwestern logo"
-        />
+        <img className="nav-logo" src={navLogo} alt="midwestern logo" />
         <div className="nav-links">
           <Link to="/contact" className="nav-link">
             contact
@@ -81,51 +125,62 @@ const HomePage = (props) => {
             <div className="img-container">
               <img src={talkie} alt="" />
             </div>
-            <h1 className="card-title">Heading Two</h1>
-            <p className="card-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et eius
-              quasi consectetur quaerat! Aperiam odit rem repudiandae?
-            </p>
-            <button className="card-btn">
-              Learn More
-            </button>
+            {/* Heading Two content from db */}
+            {h2.map((h2) => (
+              <h2 key={h2.lorem_id}>{h2.lorem_heading_two}</h2>
+            ))}
+            {/* Paragraph content from db */}
+            {p.map((p) => (
+              <p key={p.lorem_id}>{p.lorem_paragraph}</p>
+            ))}
+            <button className="card-btn">Learn More</button>
           </div>
           <div className="card">
             <div className="img-container">
               <img src={rabbit} alt="" />
             </div>
-            <h1 className="card-title">Heading Two</h1>
-            <p className="card-content">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Blanditiis reiciendis placeat, obcaecati necessitatibus autem
-              aspernatur possimus repellendus!
-            </p>
-            <button className="card-btn">
-              Learn More
-            </button>
+            {/* <h2 className="card-title">Heading Two</h2> */}
+            {h2.map((h2) => (
+              <h2 key={h2.lorem_id}>{h2.lorem_heading_two}</h2>
+            ))}
+            {p.map((p) => (
+              <p key={p.lorem_id}>{p.lorem_paragraph}</p>
+            ))}
+            <button className="card-btn">Learn More</button>
           </div>
           <div className="card">
             <div className="img-container">
               <img src={shield} alt="" />
             </div>
-            <h1 className="card-title">Heading Two</h1>
-            <p className="card-content">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum
-              blanditiis incidunt quos deserunt, magni perferendis suscipit
-              voluptates.
-            </p>
-            <button className="card-btn">
-              Learn More
-            </button>
+            {/* <h2 className="card-title">Heading Two</h2> */}
+            {h2.map((h2) => (
+              <h2 key={h2.lorem_id}>{h2.lorem_heading_two}</h2>
+            ))}
+            {p.map((p) => (
+              <p key={p.lorem_id}>{p.lorem_paragraph}</p>
+            ))}
+            <button className="card-btn">Learn More</button>
           </div>
         </div>
       </section>
       {/* HEADING SECTION */}
       <section>
         <div className="names-container">
-          <h1>Heading One</h1>
+          {/* <h1>Heading One</h1> */}
+          <h1>
+            {h1.map((h1) => (
+              <span key={h1.lorem_id}>{h1.lorem_heading_one}</span>
+            ))}
+          </h1>
           <p>
-            Remove the duplicates in 2 Javascript objects (found in readme), add the results to an array and output the list of distinct names in an unordered list below this paragraph when <button id="listLink" onClick={showPeople}>this link</button> is clicked. If the operation has been completed already, notify the user that this has already been done.
+            Remove the duplicates in 2 Javascript objects (found in readme), add
+            the results to an array and output the list of distinct names in an
+            unordered list below this paragraph when{" "}
+            <button id="listLink" onClick={showPeople}>
+              this link
+            </button>{" "}
+            is clicked. If the operation has been completed already, notify the
+            user that this has already been done.
           </p>
           <ul className="name-list"></ul>
         </div>

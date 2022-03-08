@@ -1,8 +1,8 @@
 import React,{ Fragment, useState } from 'react';
 
 const ContactForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [title, setTitle] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -10,7 +10,7 @@ const ContactForm = () => {
   const onSubmitForm = async e => {
     e.preventDefault();
     try {
-      const body = {firstName, lastName, title, email, message};
+      const body = {first_name, last_name, title, email, message};
       const response = await fetch('http://localhost:5000/contactForms', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -20,25 +20,32 @@ const ContactForm = () => {
     } catch (err) {
       console.error(err.message);
     }
+      document.getElementById("first").value = "";
+      document.getElementById("last").value = "";
+      document.getElementById("title").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("message").value = "";
   }
 
 return (
   <Fragment>
-    <form action="" onSubmit={onSubmitForm}>
+    <form id='form' onSubmit={onSubmitForm}>
       <div className="form-row">
         <div className="input-box">
           <input
+            id='first'
             type="text"
             placeholder="First Name"
-            value={firstName}
+            value={first_name}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="input-box">
           <input
+            id='last'
             type="text"
             placeholder="Last Name"
-            value={lastName}
+            value={last_name}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
@@ -47,6 +54,7 @@ return (
       <div className="form-row">
         <div className="input-box">
           <input
+            id='title'
             type="text"
             placeholder="Title"
             value={title}
@@ -55,6 +63,7 @@ return (
         </div>
         <div className="input-box">
           <input
+            id='email'
             type="email"
             placeholder="Email"
             value={email}
@@ -66,6 +75,7 @@ return (
       <div className="textarea">
         <div className="input-box">
           <textarea
+            id='message'
             cols="30"
             rows="5"
             placeholder="Message"
